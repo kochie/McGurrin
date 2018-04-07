@@ -1,0 +1,17 @@
+{
+  "name": "McGurrin",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "start": "electron ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^1.8.4",
+    "electron-builder": "^20.8.1"
+  }
+}
