@@ -21,7 +21,7 @@ class WordList extends React.Component {
     return (
       <Grid container justify="center" className={classes.container}>
         <Grid item>
-          <Typography>
+          <Typography className={classes.font}>
             {words.split('').map((char, idx) => (<span className={idx === index ? classes.selected : null} key={idx}>{char}</span>))}
           </Typography>
         </Grid>
@@ -33,6 +33,9 @@ class WordList extends React.Component {
 const styles = {
   container: {
 
+  },
+  font: {
+    fontFamily: 'Roboto Mono',
   },
   selected: {
     backgroundColor: 'red',
