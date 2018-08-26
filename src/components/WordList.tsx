@@ -1,22 +1,38 @@
-/* eslint react/no-array-index-key: 0 */
 import React from 'react';
-import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { withStyles } from 'material-ui/styles';
+import { WithStyles } from 'material-ui/core'
 import Grid from 'material-ui/Grid';
 import Typography from 'material-ui/Typography';
-import { connect } from 'react-redux';
+
 import { nextChar } from '../actions';
 
-class WordList extends React.Component {
+const styles = {
+  container: {
+
+  },
+  selected: {
+    backgroundColor: 'red',
+  },
+};
+
+export interface Props extends WithStyles<typeof styles> {
+  words: string,
+  index: number,
+  increment: Function,
+}
+
+class WordList extends React.Component<Props> {
   constructor(props) {
     super(props);
+    const {increment, index} = this.props
     window.addEventListener('keypress', (ev) => {
-      this.props.increment();
-      console.log(ev.charCode, this.props.index);
+      increment();
+      console.log(ev.charCode, index);
     });
   }
 
-  render() {
+  public render(): JSX.Element {
     const { classes, index, words } = this.props;
     return (
       <Grid container justify="center" className={classes.container}>
@@ -29,23 +45,6 @@ class WordList extends React.Component {
     );
   }
 }
-
-const styles = {
-  container: {
-
-  },
-  selected: {
-    backgroundColor: 'red',
-  },
-};
-
-
-WordList.propTypes = {
-  words: PropTypes.string.isRequired,
-  index: PropTypes.number.isRequired,
-  increment: PropTypes.func.isRequired,
-  classes: PropTypes.objectOf(PropTypes.number).isRequired,
-};
 
 const withClasses = withStyles(styles)(WordList);
 

@@ -6,7 +6,7 @@ import { createLogger } from 'redux-logger';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
 import rootReducer from './reducers';
-import App from './app';
+import App from './App';
 
 const middleware = [];
 if (process.env.NODE_ENV !== 'production') {
@@ -15,4 +15,9 @@ if (process.env.NODE_ENV !== 'production') {
 
 const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(...middleware)));
 
-ReactDOM.render(<Provider store={store}><App /></Provider>, document.getElementById('root'));
+ReactDOM.render(
+  <Provider store={store}>
+    <App />
+  </Provider>, 
+  document.getElementById('root')
+);
