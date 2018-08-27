@@ -1,16 +1,20 @@
-let index = 0;
+export const nextChar = (previousKey: string) => ({
+  type: "NEXT_CHAR",
+  previousKey
+});
 
-export const nextChar = (length) => {
-  index += 1;
-  return ({
-    type: 'NEXT_CHAR',
-    index: (index) % length,
-  });
-};
+export const updateWords = (words: string) => ({
+  type: "UPDATE_WORDS",
+  string: words
+});
 
-export const updateRate = (rate) => ({
-    type: "UPDATE_RATE",
-    rate,
-  });
+export const updateRate = (rate: number) => ({
+  type: "UPDATE_RATE",
+  rate
+});
+
+export const incrementTypo = () => ({
+  type: "INCREMENT_TYPO"
+})
 
 export default () => {};

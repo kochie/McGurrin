@@ -1,9 +1,17 @@
-const words = (state = { idx: 0 }, action) => {
+const words = (state = { idx: 0, string: "", previousKey: "" }, action) => {
   switch (action.type) {
     case ('NEXT_CHAR'): {
       return ({
         ...state,
-        idx: action.index,
+        idx: ++state.idx % state.string.length,
+        previousKey: action.previousKey
+      });
+    }
+    case ('UPDATE_WORDS'): {
+      return ({
+        ...state,
+        string: action.string,
+        idx: 0
       });
     }
     default: {

@@ -3,11 +3,11 @@
   "version": "1.0.0",
   "description": "A touch typing app written in Electron",
   "scripts": {
-    "dev": "concurrently 'yarn run start:react' 'wait-on http://localhost:8080/ && yarn run start:electron'",
+    "dev": "concurrently 'yarn run dev:react' 'wait-on http://localhost:8080/ && yarn run dev:electron'",
     "test": "jest",
-    "start:react": "parcel ./src/index.html",
+    "dev:react": "parcel ./src/index.html",
     "build": "parcel build ./src/index.html",
-    "start:electron": "electron .",
+    "dev:electron": "electron .",
     "lint": "eslint",
     "fix": "eslint --fix"
   },
@@ -24,7 +24,9 @@
     "eslint-plugin-react": "^7.7.0",
     "jest": "^22.4.3",
     "parcel-bundler": "^1.9.7",
+    "prettier": "^1.14.2",
     "redux-devtools-extension": "^2.13.2",
+    "tslint": "^5.11.0",
     "typescript": "^3.0.1",
     "wait-on": "^2.1.0"
   },

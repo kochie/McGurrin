@@ -1,6 +1,7 @@
 [
   {"text":"Q","width":40,"height":40,"radius":5,"font":"mono","size":30},
   {"text":"W","width":40,"height":40,"radius":5,"font":"mono","size":30},
+  {"text":"E","width":40,"height":40,"radius":5,"font":"mono","size":30},
   {"text":"R","width":40,"height":40,"radius":5,"font":"mono","size":30},
   {"text":"T","width":40,"height":40,"radius":5,"font":"mono","size":30},
   {"text":"Y","width":40,"height":40,"radius":5,"font":"mono","size":30},

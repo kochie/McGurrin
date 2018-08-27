@@ -1,4 +1,4 @@
-const stats = (state = {}, action) => {
+const stats = (state = {typing_rate: 0, typos:0}, action) => {
   switch (action.type) {
     case ('UPDATE_RATE'): {
       return ({
@@ -9,7 +9,7 @@ const stats = (state = {}, action) => {
     case ('INCREMENT_TYPO'): {
       return ({
         ...state,
-        typo: action.typo,
+        typos: ++state.typos,
       });
     }
     default: {

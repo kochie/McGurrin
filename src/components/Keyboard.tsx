@@ -53,18 +53,18 @@ function roundRect(
   ctx.save();
   ctx.beginPath();
   ctx.moveTo(x + radius, y);
-  console.log([x + radius, y])
+  // console.log([x + radius, y])
   ctx.lineTo((x + width) - radius, y);
-  console.log([(x + width) - radius, y])
+  // console.log([(x + width) - radius, y])
   ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
   ctx.lineTo(x + width, (y + height) - radius);
-  console.log([x + width, (y + height) - radius])
+  // console.log([x + width, (y + height) - radius])
   ctx.quadraticCurveTo(x + width, y + height, (x + width) - radius, y + height);
   ctx.lineTo(x + radius, y + height);
-  console.log([x + radius, y + height])
+  // console.log([x + radius, y + height])
   ctx.quadraticCurveTo(x, y + height, x, (y + height) - radius);
   ctx.lineTo(x, y + radius);
-  console.log([x, y + radius])
+  // console.log([x, y + radius])
   ctx.quadraticCurveTo(x, y, x + radius, y);
   ctx.closePath();
 
@@ -96,10 +96,25 @@ function drawKey(ctx: CanvasRenderingContext2D, text: string, position: coordina
 }
 
 function drawKeyboard(ctx: CanvasRenderingContext2D, keys: key[], startingPosition: coordinates, layout: layout) {
-  keys.forEach((key, index) => {
-    const idx = index
-    const rowNumber = 0
-    const origin = {x: startingPosition.x+idx*(layout.padding+key.width), y: startingPosition.y+rowNumber*layout.padding}
+  let totalLength = layout.padding
+  let rowNumber = 0
+  let idx = -1
+  keys.forEach((key) => {
+    totalLength += key.width + layout.padding
+    if (totalLength > layout.rowLength) {
+      rowNumber += 1
+      idx = 0
+      totalLength = key.width + layout.padding
+    } else {
+      idx += 1
+    }
+
+    // console.log(rowNumber, totalLength)
+    const origin = {
+      x: startingPosition.x + idx * (layout.padding + key.width), 
+      y: startingPosition.y + rowNumber * (key.height + layout.padding)
+    }
+    
     drawKey(ctx, key.text, origin, {width: key.width, height: key.height}, {radius: key.radius, size: key.size, font: key.font})
   })
 }
@@ -113,9 +128,9 @@ export default class Keyboard extends React.Component {
 
   componentDidMount() {
     const ctx = this.keyboard.current.getContext('2d');
-    this.keyboard.current.height = window.innerHeight
+    this.keyboard.current.height = window.innerHeight/2
     this.keyboard.current.width = window.innerWidth 
-    drawKeyboard(ctx, keys, {x:10,y:10}, {rowLength:100,padding:5})
+    drawKeyboard(ctx, keys, {x:10,y:10}, {rowLength:(40+5)*10+5,padding:5})
   }
 
   render() { return (<canvas ref={this.keyboard} />); }

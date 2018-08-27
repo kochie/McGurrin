@@ -1,11 +1,10 @@
-import React from 'react';
+import * as React from 'react';
 import { connect } from 'react-redux';
 import { withStyles } from 'material-ui/styles';
 import { WithStyles } from 'material-ui/core'
 import Grid from 'material-ui/Grid';
 import Typography from 'material-ui/Typography';
 
-import { nextChar } from '../actions';
 
 const styles = {
   container: {
@@ -22,17 +21,12 @@ const styles = {
 export interface Props extends WithStyles<typeof styles> {
   words: string,
   index: number,
-  increment: Function,
 }
 
 class WordList extends React.Component<Props> {
+  props: Props
   constructor(props) {
     super(props);
-    const {increment, index} = props
-    window.addEventListener('keypress', (ev) => {
-      increment();
-      console.log(ev.charCode, index);
-    });
   }
 
   public render(): JSX.Element {
@@ -53,12 +47,9 @@ const withClasses = withStyles(styles)(WordList);
 
 const mapStateToProps = state => ({
   index: state.words.idx,
+  words: state.words.string
 });
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
-  increment: () => {
-    dispatch(nextChar(ownProps.words.length));
-  },
-});
 
-export default connect(mapStateToProps, mapDispatchToProps)(withClasses);
+
+export default connect(mapStateToProps)(withClasses);
