@@ -28,7 +28,7 @@ export interface Props extends WithStyles<typeof styles> {
 class WordList extends React.Component<Props> {
   constructor(props) {
     super(props);
-    const {increment, index} = this.props
+    const {increment, index} = props
     window.addEventListener('keypress', (ev) => {
       increment();
       console.log(ev.charCode, index);

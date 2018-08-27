@@ -8,7 +8,7 @@ const App = () => (
   <div>
     <h1>Hello, World! Party</h1>
     <WordList words={words} />
-    <Keyboard />
+    <Keyboard/>
   </div>
 );
 

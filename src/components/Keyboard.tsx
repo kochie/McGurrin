@@ -1,4 +1,35 @@
-import React, { RefObject } from 'react';
+import * as React from 'react';
+import keys from '../constants/keys.json';
+
+interface coordinates {
+  x: number,
+  y: number
+}
+
+interface size {
+  width: number,
+  height: number
+}
+
+interface keyStyle {
+  radius?: number,
+  font?: string,
+  size?: number
+}
+
+interface key {
+  text: string,
+  width: number,
+  height: number,
+  radius: number,
+  font: string,
+  size: number
+}
+
+interface layout {
+  rowLength: number,
+  padding: number
+}
 
 /**
  * Draws a rounded rectangle using the current state of the canvas.
@@ -22,13 +53,18 @@ function roundRect(
   ctx.save();
   ctx.beginPath();
   ctx.moveTo(x + radius, y);
+  console.log([x + radius, y])
   ctx.lineTo((x + width) - radius, y);
+  console.log([(x + width) - radius, y])
   ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
   ctx.lineTo(x + width, (y + height) - radius);
+  console.log([x + width, (y + height) - radius])
   ctx.quadraticCurveTo(x + width, y + height, (x + width) - radius, y + height);
   ctx.lineTo(x + radius, y + height);
+  console.log([x + radius, y + height])
   ctx.quadraticCurveTo(x, y + height, x, (y + height) - radius);
   ctx.lineTo(x, y + radius);
+  console.log([x, y + radius])
   ctx.quadraticCurveTo(x, y, x + radius, y);
   ctx.closePath();
 
@@ -42,16 +78,44 @@ function roundRect(
   ctx.restore();
 }
 
+function drawLetter(ctx: CanvasRenderingContext2D, text: string, x: number, y: number, font: string = "serif", size: number = 48) {
+  ctx.save()
+  ctx.font = `${size}px ${font}`
+  ctx.textAlign="center";
+  ctx.textBaseline="middle"; 
+  ctx.fillText(text, x, y)
+  ctx.restore()
+}
+
+function drawKey(ctx: CanvasRenderingContext2D, text: string, position: coordinates, size: size, style: keyStyle) {
+  const borderWidth = 1
+  const width = size.width+2*borderWidth
+  const height = size.height+2*borderWidth
+  roundRect(ctx, position.x, position.y, width, height, style.radius);
+  drawLetter(ctx, text, width/2+position.x, height/2+position.y+3, style.font, style.size)
+}
+
+function drawKeyboard(ctx: CanvasRenderingContext2D, keys: key[], startingPosition: coordinates, layout: layout) {
+  keys.forEach((key, index) => {
+    const idx = index
+    const rowNumber = 0
+    const origin = {x: startingPosition.x+idx*(layout.padding+key.width), y: startingPosition.y+rowNumber*layout.padding}
+    drawKey(ctx, key.text, origin, {width: key.width, height: key.height}, {radius: key.radius, size: key.size, font: key.font})
+  })
+}
+
 export default class Keyboard extends React.Component {
-  private keyboard: RefObject<HTMLCanvasElement> 
+  private keyboard: React.RefObject<HTMLCanvasElement> 
   constructor(props) {
     super(props);
     this.keyboard = React.createRef();
   }
 
   componentDidMount() {
-	  const ctx = this.keyboard.current.getContext('2d');
-	  roundRect(ctx, 10, 10, 50, 50, 10);
+    const ctx = this.keyboard.current.getContext('2d');
+    this.keyboard.current.height = window.innerHeight
+    this.keyboard.current.width = window.innerWidth 
+    drawKeyboard(ctx, keys, {x:10,y:10}, {rowLength:100,padding:5})
   }
 
   render() { return (<canvas ref={this.keyboard} />); }
