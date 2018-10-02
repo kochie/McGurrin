@@ -15,3 +15,12 @@ npm run dev
 ```
 
 Currently I'm writing the app in TypeScript and using Parcel as the bundler.
+
+## Planned Features
+- [ ] Fast and modern interface.
+- [ ] Gradual progression to more keys.
+- [ ] Better statistics and data.
+- [ ] Arbitary keyboard layouts.
+- [ ] Cloud storing of achievements and progression.
+- [ ] Themes and UI tweaks.
+- [ ] Installers for all major OS'.
